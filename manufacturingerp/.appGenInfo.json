@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Tue Jul 14 2026 15:38:12 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "SAP System (ABAP Cloud)",
+    "metadataFilename": "",
+    "serviceUrl": "https://e9233ee0-105b-4c71-893f-d4b6f0ddd36a.abap.us10.hana.ondemand.com/sap/opu/odata/sap/ZUI_MANUFACTURING",
+    "appName": "manufacturingerp",
+    "appTitle": "Enterprise Manufacturing ERP",
+    "appDescription": "Enterprise Manufacturing ERP System using SAPUI5, SAP Fiori, and SAP RAP",
+    "appNamespace": "com.manufacturing.erp",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.145.3",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.28.0",
+    "template": "Basic V2",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}
