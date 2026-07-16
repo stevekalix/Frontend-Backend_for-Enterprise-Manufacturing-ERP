@@ -122,53 +122,57 @@ sap.ui.define([
             }
 
             var oTable = this.byId("supplierTable");
-            var oBinding = oTable.getBinding("items");
             var oModel = this.getView().getModel();
 
             var oView = this.getView();
             oView.setBusy(true);
             var that = this;
 
+            var oPayload = {
+                SupplierId: oData.SupplierId,
+                SupplierName: oData.SupplierName,
+                GstNumber: oData.GstNumber,
+                Phone: oData.Phone,
+                Email: oData.Email,
+                Address: oData.Address,
+                Status: oData.Status
+            };
+
             if (oData.isCreate) {
                 // Create Operation
-                var oNewContext = oBinding.create({
-                    SupplierId: oData.SupplierId,
-                    SupplierName: oData.SupplierName,
-                    GstNumber: oData.GstNumber,
-                    Phone: oData.Phone,
-                    Email: oData.Email,
-                    Address: oData.Address,
-                    Status: oData.Status
-                });
-
-                oNewContext.created().then(function () {
-                    oView.setBusy(false);
-                    that.onCancelSupplier();
-                    MessageToast.show("Supplier created successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error creating supplier: " + oError.message);
+                oModel.create("/Supplier", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelSupplier();
+                        MessageToast.show("Supplier created successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error creating supplier";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             } else {
                 // Edit Operation
-                var oSelectedItem = oTable.getSelectedItem();
-                var oContext = oSelectedItem.getBindingContext();
-                
-                oContext.setProperty("SupplierName", oData.SupplierName);
-                oContext.setProperty("GstNumber", oData.GstNumber);
-                oContext.setProperty("Phone", oData.Phone);
-                oContext.setProperty("Email", oData.Email);
-                oContext.setProperty("Address", oData.Address);
-                oContext.setProperty("Status", oData.Status);
-
-                // Submit changes for V4 model
-                oModel.submitBatch(oBinding.getUpdateGroupId()).then(function () {
-                    oView.setBusy(false);
-                    that.onCancelSupplier();
-                    MessageToast.show("Supplier updated successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error updating supplier: " + oError.message);
+                oModel.update("/Supplier(SupplierId='" + oData.SupplierId + "')", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelSupplier();
+                        MessageToast.show("Supplier updated successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error updating supplier";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             }
         },
@@ -190,15 +194,23 @@ sap.ui.define([
 
             var oContext = oSelectedItem.getBindingContext();
             var sSupplierId = oContext.getProperty("SupplierId");
+            var oModel = this.getView().getModel();
+            var oView = this.getView();
 
             MessageBox.confirm("Are you sure you want to delete Supplier " + sSupplierId + "?", {
                 title: "Confirm Delete",
                 onClose: function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
-                        oContext.delete().then(function () {
-                            MessageToast.show("Supplier deleted successfully");
-                        }, function (oError) {
-                            MessageBox.error("Error deleting supplier: " + oError.message);
+                        oView.setBusy(true);
+                        oModel.remove("/Supplier(SupplierId='" + sSupplierId + "')", {
+                            success: function () {
+                                oView.setBusy(false);
+                                MessageToast.show("Supplier deleted successfully");
+                            },
+                            error: function (oError) {
+                                oView.setBusy(false);
+                                MessageBox.error("Error deleting supplier");
+                            }
                         });
                     }
                 }

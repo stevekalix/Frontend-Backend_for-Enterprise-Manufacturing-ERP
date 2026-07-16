@@ -13,7 +13,7 @@
         <f:content>
             <VBox class="sapUiContentPadding">
                 <Table id="bomTable"
-                    items="{path: '/BOM', parameters: {$count: true}}"
+                    items="{/BOM}"
                     mode="SingleSelectLeft"
                     growing="true"
                     growingThreshold="10"

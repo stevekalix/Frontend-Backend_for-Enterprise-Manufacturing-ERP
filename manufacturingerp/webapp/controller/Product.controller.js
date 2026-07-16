@@ -120,51 +120,56 @@ sap.ui.define([
             }
 
             var oTable = this.byId("productTable");
-            var oBinding = oTable.getBinding("items");
             var oModel = this.getView().getModel();
 
             var oView = this.getView();
             oView.setBusy(true);
             var that = this;
 
+            var oPayload = {
+                ProductId: oData.ProductId,
+                ProductName: oData.ProductName,
+                Category: oData.Category,
+                ProfitPercentage: parseFloat(oData.ProfitPercentage) || 0,
+                Currency: oData.Currency,
+                Status: oData.Status
+            };
+
             if (oData.isCreate) {
                 // Create Operation
-                var oNewContext = oBinding.create({
-                    ProductId: oData.ProductId,
-                    ProductName: oData.ProductName,
-                    Category: oData.Category,
-                    ProfitPercentage: parseFloat(oData.ProfitPercentage) || 0,
-                    Currency: oData.Currency,
-                    Status: oData.Status
-                });
-
-                oNewContext.created().then(function () {
-                    oView.setBusy(false);
-                    that.onCancelProduct();
-                    MessageToast.show("Product created successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error creating product: " + oError.message);
+                oModel.create("/Product", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelProduct();
+                        MessageToast.show("Product created successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error creating product";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             } else {
                 // Edit Operation
-                var oSelectedItem = oTable.getSelectedItem();
-                var oContext = oSelectedItem.getBindingContext();
-                
-                oContext.setProperty("ProductName", oData.ProductName);
-                oContext.setProperty("Category", oData.Category);
-                oContext.setProperty("ProfitPercentage", parseFloat(oData.ProfitPercentage) || 0);
-                oContext.setProperty("Currency", oData.Currency);
-                oContext.setProperty("Status", oData.Status);
-
-                // Submit changes for V4 model
-                oModel.submitBatch(oBinding.getUpdateGroupId()).then(function () {
-                    oView.setBusy(false);
-                    that.onCancelProduct();
-                    MessageToast.show("Product updated successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error updating product: " + oError.message);
+                oModel.update("/Product(ProductId='" + oData.ProductId + "')", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelProduct();
+                        MessageToast.show("Product updated successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error updating product";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             }
         },
@@ -186,15 +191,23 @@ sap.ui.define([
 
             var oContext = oSelectedItem.getBindingContext();
             var sProductId = oContext.getProperty("ProductId");
+            var oModel = this.getView().getModel();
+            var oView = this.getView();
 
             MessageBox.confirm("Are you sure you want to delete Product " + sProductId + "?", {
                 title: "Confirm Delete",
                 onClose: function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
-                        oContext.delete().then(function () {
-                            MessageToast.show("Product deleted successfully");
-                        }, function (oError) {
-                            MessageBox.error("Error deleting product: " + oError.message);
+                        oView.setBusy(true);
+                        oModel.remove("/Product(ProductId='" + sProductId + "')", {
+                            success: function () {
+                                oView.setBusy(false);
+                                MessageToast.show("Product deleted successfully");
+                            },
+                            error: function (oError) {
+                                oView.setBusy(false);
+                                MessageBox.error("Error deleting product");
+                            }
                         });
                     }
                 }

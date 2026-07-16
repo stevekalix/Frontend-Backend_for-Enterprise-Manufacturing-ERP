@@ -128,57 +128,59 @@ sap.ui.define([
             }
 
             var oTable = this.byId("materialTable");
-            var oBinding = oTable.getBinding("items");
             var oModel = this.getView().getModel();
 
             var oView = this.getView();
             oView.setBusy(true);
             var that = this;
 
+            var oPayload = {
+                MaterialId: oData.MaterialId,
+                MaterialName: oData.MaterialName,
+                SupplierId: oData.SupplierId,
+                Category: oData.Category,
+                Unit: oData.Unit,
+                UnitPrice: parseFloat(oData.UnitPrice) || 0,
+                CukyField: oData.CukyField,
+                CurrentStock: parseFloat(oData.CurrentStock) || 0,
+                Status: oData.Status
+            };
+
             if (oData.isCreate) {
                 // Create Operation
-                var oNewContext = oBinding.create({
-                    MaterialId: oData.MaterialId,
-                    MaterialName: oData.MaterialName,
-                    SupplierId: oData.SupplierId,
-                    Category: oData.Category,
-                    Unit: oData.Unit,
-                    UnitPrice: parseFloat(oData.UnitPrice) || 0,
-                    CukyField: oData.CukyField,
-                    CurrentStock: parseFloat(oData.CurrentStock) || 0,
-                    Status: oData.Status
-                });
-
-                oNewContext.created().then(function () {
-                    oView.setBusy(false);
-                    that.onCancelMaterial();
-                    MessageToast.show("Material created successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error creating material: " + oError.message);
+                oModel.create("/Material", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelMaterial();
+                        MessageToast.show("Material created successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error creating material";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             } else {
                 // Edit Operation
-                var oSelectedItem = oTable.getSelectedItem();
-                var oContext = oSelectedItem.getBindingContext();
-                
-                oContext.setProperty("MaterialName", oData.MaterialName);
-                oContext.setProperty("SupplierId", oData.SupplierId);
-                oContext.setProperty("Category", oData.Category);
-                oContext.setProperty("Unit", oData.Unit);
-                oContext.setProperty("UnitPrice", parseFloat(oData.UnitPrice) || 0);
-                oContext.setProperty("CukyField", oData.CukyField);
-                oContext.setProperty("CurrentStock", parseFloat(oData.CurrentStock) || 0);
-                oContext.setProperty("Status", oData.Status);
-
-                // Submit changes for V4 model
-                oModel.submitBatch(oBinding.getUpdateGroupId()).then(function () {
-                    oView.setBusy(false);
-                    that.onCancelMaterial();
-                    MessageToast.show("Material updated successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error updating material: " + oError.message);
+                oModel.update("/Material(MaterialId='" + oData.MaterialId + "')", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelMaterial();
+                        MessageToast.show("Material updated successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error updating material";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             }
         },
@@ -200,15 +202,23 @@ sap.ui.define([
 
             var oContext = oSelectedItem.getBindingContext();
             var sMaterialId = oContext.getProperty("MaterialId");
+            var oModel = this.getView().getModel();
+            var oView = this.getView();
 
             MessageBox.confirm("Are you sure you want to delete Material " + sMaterialId + "?", {
                 title: "Confirm Delete",
                 onClose: function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
-                        oContext.delete().then(function () {
-                            MessageToast.show("Material deleted successfully");
-                        }, function (oError) {
-                            MessageBox.error("Error deleting material: " + oError.message);
+                        oView.setBusy(true);
+                        oModel.remove("/Material(MaterialId='" + sMaterialId + "')", {
+                            success: function () {
+                                oView.setBusy(false);
+                                MessageToast.show("Material deleted successfully");
+                            },
+                            error: function (oError) {
+                                oView.setBusy(false);
+                                MessageBox.error("Error deleting material");
+                            }
                         });
                     }
                 }

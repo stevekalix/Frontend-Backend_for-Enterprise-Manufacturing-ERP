@@ -137,57 +137,59 @@ sap.ui.define([
             }
 
             var oTable = this.byId("bomTable");
-            var oBinding = oTable.getBinding("items");
             var oModel = this.getView().getModel();
 
             var oView = this.getView();
             oView.setBusy(true);
             var that = this;
 
+            var oPayload = {
+                BomId: oData.BomId,
+                ProductId: oData.ProductId,
+                MaterialId: oData.MaterialId,
+                MaterialName: oData.MaterialName,
+                Quantity: parseFloat(oData.Quantity) || 0,
+                Unit: oData.Unit,
+                UnitPrice: parseFloat(oData.UnitPrice) || 0,
+                TotalAmount: parseFloat(oData.TotalAmount) || 0,
+                Currency: oData.Currency
+            };
+
             if (oData.isCreate) {
                 // Create Operation
-                var oNewContext = oBinding.create({
-                    BomId: oData.BomId,
-                    ProductId: oData.ProductId,
-                    MaterialId: oData.MaterialId,
-                    MaterialName: oData.MaterialName,
-                    Quantity: parseFloat(oData.Quantity) || 0,
-                    Unit: oData.Unit,
-                    UnitPrice: parseFloat(oData.UnitPrice) || 0,
-                    TotalAmount: parseFloat(oData.TotalAmount) || 0,
-                    Currency: oData.Currency
-                });
-
-                oNewContext.created().then(function () {
-                    oView.setBusy(false);
-                    that.onCancelBom();
-                    MessageToast.show("BOM created successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error creating BOM: " + oError.message);
+                oModel.create("/BOM", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelBom();
+                        MessageToast.show("BOM created successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error creating BOM";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             } else {
                 // Edit Operation
-                var oSelectedItem = oTable.getSelectedItem();
-                var oContext = oSelectedItem.getBindingContext();
-                
-                oContext.setProperty("ProductId", oData.ProductId);
-                oContext.setProperty("MaterialId", oData.MaterialId);
-                oContext.setProperty("MaterialName", oData.MaterialName);
-                oContext.setProperty("Quantity", parseFloat(oData.Quantity) || 0);
-                oContext.setProperty("Unit", oData.Unit);
-                oContext.setProperty("UnitPrice", parseFloat(oData.UnitPrice) || 0);
-                oContext.setProperty("TotalAmount", parseFloat(oData.TotalAmount) || 0);
-                oContext.setProperty("Currency", oData.Currency);
-
-                // Submit changes for V4 model
-                oModel.submitBatch(oBinding.getUpdateGroupId()).then(function () {
-                    oView.setBusy(false);
-                    that.onCancelBom();
-                    MessageToast.show("BOM updated successfully");
-                }, function (oError) {
-                    oView.setBusy(false);
-                    MessageBox.error("Error updating BOM: " + oError.message);
+                oModel.update("/BOM(BomId='" + oData.BomId + "')", oPayload, {
+                    success: function () {
+                        oView.setBusy(false);
+                        that.onCancelBom();
+                        MessageToast.show("BOM updated successfully");
+                    },
+                    error: function (oError) {
+                        oView.setBusy(false);
+                        var sErrorMsg = "Error updating BOM";
+                        try {
+                            var oResponse = JSON.parse(oError.responseText);
+                            sErrorMsg = oResponse.error.message.value;
+                        } catch (e) {}
+                        MessageBox.error(sErrorMsg);
+                    }
                 });
             }
         },
@@ -209,15 +211,23 @@ sap.ui.define([
 
             var oContext = oSelectedItem.getBindingContext();
             var sBomId = oContext.getProperty("BomId");
+            var oModel = this.getView().getModel();
+            var oView = this.getView();
 
             MessageBox.confirm("Are you sure you want to delete BOM Record " + sBomId + "?", {
                 title: "Confirm Delete",
                 onClose: function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
-                        oContext.delete().then(function () {
-                            MessageToast.show("BOM record deleted successfully");
-                        }, function (oError) {
-                            MessageBox.error("Error deleting BOM: " + oError.message);
+                        oView.setBusy(true);
+                        oModel.remove("/BOM(BomId='" + sBomId + "')", {
+                            success: function () {
+                                oView.setBusy(false);
+                                MessageToast.show("BOM record deleted successfully");
+                            },
+                            error: function (oError) {
+                                oView.setBusy(false);
+                                MessageBox.error("Error deleting BOM");
+                            }
                         });
                     }
                 }

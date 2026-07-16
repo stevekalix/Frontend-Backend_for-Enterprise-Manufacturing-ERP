@@ -14,7 +14,7 @@
         <f:content>
             <VBox class="sapUiContentPadding">
                 <Table id="productTable"
-                    items="{path: '/Product', parameters: {$count: true}}"
+                    items="{/Product}"
                     mode="SingleSelectLeft"
                     growing="true"
                     growingThreshold="10"

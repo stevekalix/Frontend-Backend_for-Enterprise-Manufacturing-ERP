@@ -32,35 +32,43 @@ sap.ui.define([
             }
 
             // Products count
-            var oProductList = oModel.bindList("/Product", null, null, null, { $count: true });
-            oProductList.requestCount().then(function (iCount) {
-                oDashboardModel.setProperty("/productsCount", iCount);
-            }).catch(function () {
-                oDashboardModel.setProperty("/productsCount", 0);
+            oModel.read("/Product/$count", {
+                success: function (oData) {
+                    oDashboardModel.setProperty("/productsCount", oData);
+                },
+                error: function () {
+                    oDashboardModel.setProperty("/productsCount", 0);
+                }
             });
 
             // Suppliers count
-            var oSupplierList = oModel.bindList("/Supplier", null, null, null, { $count: true });
-            oSupplierList.requestCount().then(function (iCount) {
-                oDashboardModel.setProperty("/suppliersCount", iCount);
-            }).catch(function () {
-                oDashboardModel.setProperty("/suppliersCount", 0);
+            oModel.read("/Supplier/$count", {
+                success: function (oData) {
+                    oDashboardModel.setProperty("/suppliersCount", oData);
+                },
+                error: function () {
+                    oDashboardModel.setProperty("/suppliersCount", 0);
+                }
             });
 
             // Materials count
-            var oMaterialList = oModel.bindList("/Material", null, null, null, { $count: true });
-            oMaterialList.requestCount().then(function (iCount) {
-                oDashboardModel.setProperty("/materialsCount", iCount);
-            }).catch(function () {
-                oDashboardModel.setProperty("/materialsCount", 0);
+            oModel.read("/Material/$count", {
+                success: function (oData) {
+                    oDashboardModel.setProperty("/materialsCount", oData);
+                },
+                error: function () {
+                    oDashboardModel.setProperty("/materialsCount", 0);
+                }
             });
 
             // BOM count
-            var oBOMList = oModel.bindList("/BOM", null, null, null, { $count: true });
-            oBOMList.requestCount().then(function (iCount) {
-                oDashboardModel.setProperty("/bomsCount", iCount);
-            }).catch(function () {
-                oDashboardModel.setProperty("/bomsCount", 0);
+            oModel.read("/BOM/$count", {
+                success: function (oData) {
+                    oDashboardModel.setProperty("/bomsCount", oData);
+                },
+                error: function () {
+                    oDashboardModel.setProperty("/bomsCount", 0);
+                }
             });
         },
 
