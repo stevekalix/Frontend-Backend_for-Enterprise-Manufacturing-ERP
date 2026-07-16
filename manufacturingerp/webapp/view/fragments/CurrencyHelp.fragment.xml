@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <SelectDialog
+        title="Select Currency"
+        items="{/ZR_CURRENCY_M}"
+        search=".onCurrencyValueHelpSearch"
+        confirm=".onCurrencyValueHelpConfirm"
+        cancel=".onCurrencyValueHelpCancel">
+        <StandardListItem
+            title="{CurrencyCode}"
+            description="{CurrencyName}"
+            info="{CurrencySymbol}"
+            type="Active" />
+    </SelectDialog>
+</core:FragmentDefinition>

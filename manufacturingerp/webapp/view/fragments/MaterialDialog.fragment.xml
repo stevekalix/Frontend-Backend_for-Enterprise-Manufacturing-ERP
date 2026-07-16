@@ -1,0 +1,93 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="materialDialog" title="{dialog>/title}">
+        <content>
+            <form:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false">
+                <form:content>
+                    <Label text="Material ID" required="true" />
+                    <Input id="inputMaterialId"
+                        value="{dialog>/MaterialId}"
+                        placeholder="e.g. MAT_001"
+                        maxLength="10"
+                        editable="{dialog>/isCreate}" />
+
+                    <Label text="Material Name" required="true" />
+                    <Input id="inputMaterialName"
+                        value="{dialog>/MaterialName}"
+                        placeholder="Enter material name"
+                        maxLength="50" />
+
+                    <Label text="Supplier" required="true" />
+                    <Input id="inputSupplier"
+                        value="{dialog>/SupplierId}"
+                        placeholder="Select supplier"
+                        showValueHelp="true"
+                        valueHelpRequest=".onSupplierValueHelpRequest" />
+
+                    <Label text="Category" required="true" />
+                    <Input id="inputCategory"
+                        value="{dialog>/Category}"
+                        placeholder="Select category"
+                        showValueHelp="true"
+                        valueHelpRequest=".onCategoryValueHelpRequest" />
+
+                    <Label text="Unit" required="true" />
+                    <Input id="inputUnit"
+                        value="{dialog>/Unit}"
+                        placeholder="Select unit of measure"
+                        showValueHelp="true"
+                        valueHelpRequest=".onUnitValueHelpRequest" />
+
+                    <Label text="Unit Price" required="true" />
+                    <Input id="inputUnitPrice"
+                        value="{dialog>/UnitPrice}"
+                        type="Number"
+                        placeholder="e.g. 5.50" />
+
+                    <Label text="Currency" required="true" />
+                    <Input id="inputCurrency"
+                        value="{dialog>/CukyField}"
+                        placeholder="Select currency"
+                        showValueHelp="true"
+                        valueHelpRequest=".onCurrencyValueHelpRequest" />
+
+                    <Label text="Current Stock" required="true" />
+                    <Input id="inputCurrentStock"
+                        value="{dialog>/CurrentStock}"
+                        type="Number"
+                        placeholder="e.g. 100.0" />
+
+                    <Label text="Status" required="true" />
+                    <Select id="selectStatus" selectedKey="{dialog>/Status}">
+                        <core:Item key="In Stock" text="In Stock" />
+                        <core:Item key="Low Stock" text="Low Stock" />
+                        <core:Item key="Out of Stock" text="Out of Stock" />
+                    </Select>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button text="Save" type="Emphasized" press=".onSaveMaterial" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press=".onCancelMaterial" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

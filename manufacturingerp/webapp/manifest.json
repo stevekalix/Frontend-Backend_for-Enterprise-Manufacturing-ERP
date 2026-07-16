@@ -16,22 +16,12 @@
       "toolsId": "74334599-98cb-450d-83bb-36d14847cad5"
     },
     "dataSources": {
-      "ZUI_MANUFACTURING_VAN": {
-        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZUI_MANUFACTURING_VAN',Version='0001')/$value/",
-        "type": "ODataAnnotation",
-        "settings": {
-          "localUri": "localService/mainService/ZUI_MANUFACTURING_VAN.xml"
-        }
-      },
       "mainService": {
         "uri": "/sap/opu/odata/sap/ZUI_MANUFACTURING/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "ZUI_MANUFACTURING_VAN"
-          ],
           "localUri": "localService/mainService/metadata.xml",
-          "odataVersion": "2.0"
+          "odataVersion": "4.0"
         }
       }
     }
@@ -58,7 +48,11 @@
       "minUI5Version": "1.145.3",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.tnt": {},
+        "sap.ui.layout": {},
+        "sap.ui.export": {}
       }
     },
     "contentDensities": {
@@ -75,7 +69,12 @@
       "": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {
@@ -99,17 +98,61 @@
       },
       "routes": [
         {
-          "name": "RouteManufacturing_ERP_System",
-          "pattern": ":?query:",
+          "name": "dashboard",
+          "pattern": "",
           "target": [
-            "TargetManufacturing_ERP_System"
+            "dashboard"
+          ]
+        },
+        {
+          "name": "product",
+          "pattern": "product",
+          "target": [
+            "product"
+          ]
+        },
+        {
+          "name": "supplier",
+          "pattern": "supplier",
+          "target": [
+            "supplier"
+          ]
+        },
+        {
+          "name": "material",
+          "pattern": "material",
+          "target": [
+            "material"
+          ]
+        },
+        {
+          "name": "bom",
+          "pattern": "bom",
+          "target": [
+            "bom"
           ]
         }
       ],
       "targets": {
-        "TargetManufacturing_ERP_System": {
-          "id": "Manufacturing_ERP_System",
-          "name": "Manufacturing_ERP_System"
+        "dashboard": {
+          "id": "dashboard",
+          "name": "Dashboard"
+        },
+        "product": {
+          "id": "product",
+          "name": "Product"
+        },
+        "supplier": {
+          "id": "supplier",
+          "name": "Supplier"
+        },
+        "material": {
+          "id": "material",
+          "name": "Material"
+        },
+        "bom": {
+          "id": "bom",
+          "name": "BOM"
         }
       }
     },

@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <SelectDialog
+        title="Select Category"
+        items="{/ZR_CATEGORY_M}"
+        search=".onCategoryValueHelpSearch"
+        confirm=".onCategoryValueHelpConfirm"
+        cancel=".onCategoryValueHelpCancel">
+        <StandardListItem
+            title="{CategoryId}"
+            type="Active" />
+    </SelectDialog>
+</core:FragmentDefinition>

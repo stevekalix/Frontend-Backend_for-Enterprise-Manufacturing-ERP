@@ -1,0 +1,86 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog id="bomDialog" title="{dialog>/title}">
+        <content>
+            <form:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false">
+                <form:content>
+                    <Label text="BOM ID" required="true" />
+                    <Input id="inputBomId"
+                        value="{dialog>/BomId}"
+                        placeholder="e.g. BOM_001"
+                        maxLength="10"
+                        editable="{dialog>/isCreate}" />
+
+                    <Label text="Product" required="true" />
+                    <Input id="inputProduct"
+                        value="{dialog>/ProductId}"
+                        placeholder="Select product"
+                        showValueHelp="true"
+                        valueHelpRequest=".onProductValueHelpRequest" />
+
+                    <Label text="Material" required="true" />
+                    <Input id="inputMaterial"
+                        value="{dialog>/MaterialId}"
+                        placeholder="Select material"
+                        showValueHelp="true"
+                        valueHelpRequest=".onMaterialValueHelpRequest" />
+
+                    <Label text="Material Name" />
+                    <Input id="inputMaterialName"
+                        value="{dialog>/MaterialName}"
+                        editable="false" />
+
+                    <Label text="Quantity" required="true" />
+                    <Input id="inputQuantity"
+                        value="{dialog>/Quantity}"
+                        type="Number"
+                        placeholder="Enter quantity"
+                        liveChange=".onQuantityChange" />
+
+                    <Label text="Unit" />
+                    <Input id="inputUnit"
+                        value="{dialog>/Unit}"
+                        editable="false" />
+
+                    <Label text="Unit Price" />
+                    <Input id="inputUnitPrice"
+                        value="{dialog>/UnitPrice}"
+                        editable="false" />
+
+                    <Label text="Total Amount" />
+                    <Input id="inputTotalAmount"
+                        value="{dialog>/TotalAmount}"
+                        editable="false" />
+
+                    <Label text="Currency" />
+                    <Input id="inputCurrency"
+                        value="{dialog>/Currency}"
+                        editable="false" />
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button text="Save" type="Emphasized" press=".onSaveBom" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press=".onCancelBom" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

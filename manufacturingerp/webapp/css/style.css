@@ -1,1 +1,49 @@
-/* Enter your custom styles here */
+/* Custom premium style.css for Enterprise Manufacturing ERP */
+
+/* Main layout background color under Horizon */
+.sapUiBody {
+    background-color: #f4f6f9;
+}
+
+/* Premium Dashboard Card styling */
+.dashboardCard {
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.dashboardCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #2563eb;
+}
+
+/* Card Count Styling */
+.cardCountText {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Card Icon Box */
+.cardIconBox {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    display: inline-block;
+}
+
+/* Spacing and alignments */
+.alignCenter {
+    text-align: center;
+}
+
+.fullWidth {
+    width: 100%;
+}

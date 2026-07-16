@@ -1,0 +1,78 @@
+<mvc:View controllerName="com.manufacturing.erp.manufacturingerp.controller.Product"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m">
+    <f:DynamicPage id="productPage" toggleHeaderOnTitleClick="false">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Products" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <VBox class="sapUiContentPadding">
+                <Table id="productTable"
+                    items="{path: '/Product', parameters: {$count: true}}"
+                    mode="SingleSelectLeft"
+                    growing="true"
+                    growingThreshold="10"
+                    class="sapUiResponsiveMargin">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Product List" />
+                            <ToolbarSpacer />
+                            <SearchField id="searchField" width="30%" placeholder="Search products..." search=".onSearch" />
+                            <Button icon="sap-icon://add" text="Create" type="Transparent" press=".onCreate" tooltip="Create new product" />
+                            <Button icon="sap-icon://edit" text="Edit" type="Transparent" press=".onEdit" tooltip="Edit selected product" />
+                            <Button icon="sap-icon://delete" text="Delete" type="Negative" press=".onDelete" tooltip="Delete selected product" />
+                            <Button icon="sap-icon://refresh" type="Transparent" press=".onRefresh" tooltip="Refresh data" />
+                            <Button icon="sap-icon://excel-attachment" text="Export" type="Transparent" press=".onExport" tooltip="Export to Excel" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column width="8rem">
+                            <Text text="Product ID" />
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Product Name" />
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Category" />
+                        </Column>
+                        <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+                            <Text text="Product Cost" />
+                        </Column>
+                        <Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+                            <Text text="Profit (%)" />
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="Selling Price" />
+                        </Column>
+                        <Column width="5rem" hAlign="Center">
+                            <Text text="Currency" />
+                        </Column>
+                        <Column width="7rem" hAlign="Center">
+                            <Text text="Status" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{ProductId}" />
+                                <Text text="{ProductName}" />
+                                <Text text="{Category}" />
+                                <Text text="{parts: [{path: 'ProductCost'}, {path: 'Currency'}], formatter: '.formatter.formatCurrency'}" />
+                                <Text text="{parts: [{path: 'ProfitPercentage'}], formatter: '.formatter.formatNumber'}" />
+                                <Text text="{parts: [{path: 'SellingPrice'}, {path: 'Currency'}], formatter: '.formatter.formatCurrency'}" />
+                                <Text text="{Currency}" />
+                                <ObjectStatus text="{Status}" state="{path: 'Status', formatter: '.formatter.statusState'}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
