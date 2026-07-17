@@ -52,7 +52,7 @@
                     <!-- Material Card -->
                     <f:Card class="dashboardCard sapUiSmallMarginBottom">
                         <f:header>
-                            <card:Header title="Raw Materials" subtitle="Inventory & stock levels" iconSrc="sap-icon://factory" />
+                            <card:Header title="Raw Materials" subtitle="Inventory &amp; stock levels" iconSrc="sap-icon://factory" />
                         </f:header>
                         <f:content>
                             <VBox class="sapUiContentPadding" alignItems="Center" justifyContent="Center">
