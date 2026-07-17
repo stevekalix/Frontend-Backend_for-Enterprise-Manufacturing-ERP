@@ -143,19 +143,15 @@ sap.ui.define([
             oView.setBusy(true);
             var that = this;
 
-            var oPayload = {
-                BomId: oData.BomId,
-                ProductId: oData.ProductId,
-                MaterialId: oData.MaterialId,
-                MaterialName: oData.MaterialName,
-                Quantity: String(parseFloat(oData.Quantity) || 0),
-                Unit: oData.Unit,
-                Currency: oData.Currency
-            };
-
             if (oData.isCreate) {
                 // Create Operation
-                oModel.create("/BOM", oPayload, {
+                var oPayload = {
+                    BomId: oData.BomId,
+                    MaterialId: oData.MaterialId,
+                    Quantity: String(parseFloat(oData.Quantity) || 0),
+                    Currency: oData.Currency
+                };
+                oModel.create("/Product(ProductId='" + oData.ProductId + "')/to_BOM", oPayload, {
                     success: function () {
                         oView.setBusy(false);
                         that.onCancelBom();
@@ -173,6 +169,11 @@ sap.ui.define([
                 });
             } else {
                 // Edit Operation
+                var oPayload = {
+                    MaterialId: oData.MaterialId,
+                    Quantity: String(parseFloat(oData.Quantity) || 0),
+                    Currency: oData.Currency
+                };
                 oModel.update("/BOM(BomId='" + oData.BomId + "')", oPayload, {
                     success: function () {
                         oView.setBusy(false);
