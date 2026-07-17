@@ -1,0 +1,5 @@
+@EndUserText.label: 'production service'
+define service Zui_production {
+  expose zi_production_plan as productionplan;
+  expose zr_production_ord  as productionorder;
+}

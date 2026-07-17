@@ -1,0 +1,5 @@
+@EndUserText.label: 'Services definition for Product'
+define service ZUI_PRODUCT_M {
+  expose ZI_PRODUCT_M as Product;
+  expose ZI_BOM_M     as BOM;
+}

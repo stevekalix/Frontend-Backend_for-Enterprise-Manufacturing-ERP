@@ -1,0 +1,5 @@
+@EndUserText.label: 'service definition for manufacturing quality'
+define service Zsd_manufacturing {
+  expose zi_manufacturing as manufacturing;
+  expose zi_quality       as quality;
+}

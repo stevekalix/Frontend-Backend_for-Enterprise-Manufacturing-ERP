@@ -1,0 +1,42 @@
+managed implementation in class zbp_r_manufacturing unique;
+strict ( 2 );
+
+define behavior for zr_manufacturing //alias <alias_name>
+persistent table zmanufacturing
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _quality { create; }
+  field ( readonly )
+   CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt;
+
+}
+
+define behavior for zr_quality //alias <alias_name>
+persistent table zquantity_m
+lock dependent by _manufacturing
+authorization dependent by _manufacturing
+//etag master <field_name>
+{
+  update;
+  delete;
+  association _manufacturing;
+   field ( readonly )
+    CreatedBy,
+    CreatedAt,
+    LastChangedBy,
+    LastChangedAt,
+    LocalLastChangedAt;
+
+  field ( readonly : update )
+    ManufacturingId;
+
+}

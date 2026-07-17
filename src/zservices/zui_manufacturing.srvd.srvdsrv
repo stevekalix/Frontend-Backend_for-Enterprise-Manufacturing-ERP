@@ -1,0 +1,7 @@
+@EndUserText.label: 'Services definition for MANUFACTURING'
+define service ZUI_MANUFACTURING {
+  expose ZI_PRODUCT_M      as Product;
+  expose ZI_BOM_M          as BOM;
+  expose ZI_SUPPLIER_M     as Supplier;
+  expose ZI_RAW_MATERIAL_M as Material;
+}

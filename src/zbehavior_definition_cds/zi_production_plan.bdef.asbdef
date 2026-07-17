@@ -1,0 +1,41 @@
+managed implementation in class zbp_i_production_plan unique;
+strict ( 2 );
+
+define behavior for zi_production_plan //alias <alias_name>
+persistent table zproduction_plan
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+  association _productionord { create; }
+
+  field ( readonly )
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  LocalLastChangedAt;
+}
+
+define behavior for zr_production_ord //alias <alias_name>
+persistent table zproduction_ord
+lock dependent by _productionplan
+authorization dependent by _productionplan
+//etag master <field_name>
+{
+  update;
+  delete;
+   association _productionplan;
+    field ( readonly )
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  LocalLastChangedAt;
+  field ( readonly : update ) PlanId;
+
+}

@@ -1,0 +1,19 @@
+projection implementation in class zbp_i_supplier_m unique;
+strict ( 2 );
+
+define behavior for ZI_SUPPLIER_M alias Supplier
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _RawMaterial { create; }
+}
+
+define behavior for ZI_RAW_MATERIAL_M alias RawMaterial
+{
+  use update;
+  use delete;
+
+  use association _Supplier;
+}

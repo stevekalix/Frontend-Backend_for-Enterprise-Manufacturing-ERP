@@ -1,0 +1,60 @@
+@Metadata.layer: #CORE
+
+annotate view ZI_SUPPLIER_M with
+{
+
+  @UI.facet: [
+    {
+      id: 'GeneralInfo',
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Supplier Information',
+      position: 10
+    },
+    {
+      id: 'RawMaterial',
+      type: #LINEITEM_REFERENCE,
+      label: 'Raw Materials',
+      targetElement: '_RawMaterial',
+      position: 20
+    }
+  ]
+
+  @EndUserText.label: 'Supplier ID'
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  SupplierId;
+
+  @EndUserText.label: 'Supplier Name'
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @UI.selectionField: [{ position: 20 }]
+  SupplierName;
+
+  @EndUserText.label: 'GST Number'
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  GstNumber;
+
+  @EndUserText.label: 'Phone Number'
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  Phone;
+
+  @EndUserText.label: 'Email Address'
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  Email;
+
+  @EndUserText.label: 'Address'
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  Address;
+
+  @EndUserText.label: 'Status'
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  @UI.selectionField: [{ position: 30 }]
+  Status;
+
+}
