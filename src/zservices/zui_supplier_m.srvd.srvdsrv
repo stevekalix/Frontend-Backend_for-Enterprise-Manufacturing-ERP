@@ -1,5 +1,0 @@
-@EndUserText.label: 'Services definition for Supplier'
-define service ZUI_SUPPLIER_M {
-  expose ZI_SUPPLIER_M     as Supplier;
-  expose ZI_RAW_MATERIAL_M as Material;
-}
