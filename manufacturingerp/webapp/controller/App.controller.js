@@ -37,7 +37,7 @@ sap.ui.define([
       },
 
       onProfilePress() {
-          MessageToast.show("User Profile: Venkatesan (Administrator)");
+          MessageToast.show("User Profile: Manikandan (Administrator)");
       },
 
       onLogoutPress() {

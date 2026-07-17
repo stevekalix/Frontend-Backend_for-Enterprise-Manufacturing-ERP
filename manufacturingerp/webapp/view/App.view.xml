@@ -15,7 +15,7 @@
                 <Title text="Enterprise Manufacturing ERP System" level="H1" class="sapUiSmallMarginBegin" />
                 <ToolbarSpacer />
                 <Button icon="sap-icon://bell" type="Transparent" press=".onNotificationPress" tooltip="Notifications" />
-                <Button icon="sap-icon://customer" text="Venkatesan" type="Transparent" press=".onProfilePress" tooltip="Profile" />
+                <Button icon="sap-icon://customer" text="Manikandan" type="Transparent" press=".onProfilePress" tooltip="Profile" />
                 <Button icon="sap-icon://log" type="Transparent" press=".onLogoutPress" tooltip="Logout" />
             </tnt:ToolHeader>
         </tnt:header>
