@@ -33,6 +33,22 @@
                         </f:content>
                     </f:Card>
 
+                    <!-- BOM Card -->
+                    <f:Card class="dashboardCard sapUiSmallMarginBottom">
+                        <f:header>
+                            <card:Header title="Bill of Materials" subtitle="Product structures" iconSrc="sap-icon://clinical-tasty-recipe" />
+                        </f:header>
+                        <f:content>
+                            <VBox class="sapUiContentPadding" alignItems="Center" justifyContent="Center">
+                                <HBox class="cardIconBox sapUiSmallMarginBottom" alignItems="Center" justifyContent="Center">
+                                    <core:Icon xmlns:core="sap.ui.core" src="sap-icon://clinical-tasty-recipe" size="2rem" color="#2563eb" />
+                                </HBox>
+                                <Text text="{dashboard>/bomsCount}" class="cardCountText" />
+                                <Button text="Manage BOMs" type="Emphasized" press=".onNavigateToBoms" class="sapUiSmallMarginTop fullWidth" icon="sap-icon://navigation-right-arrow" iconFirst="false" />
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+
                     <!-- Supplier Card -->
                     <f:Card class="dashboardCard sapUiSmallMarginBottom">
                         <f:header>
@@ -61,22 +77,6 @@
                                 </HBox>
                                 <Text text="{dashboard>/materialsCount}" class="cardCountText" />
                                 <Button text="Manage Materials" type="Emphasized" press=".onNavigateToMaterials" class="sapUiSmallMarginTop fullWidth" icon="sap-icon://navigation-right-arrow" iconFirst="false" />
-                            </VBox>
-                        </f:content>
-                    </f:Card>
-
-                    <!-- BOM Card -->
-                    <f:Card class="dashboardCard sapUiSmallMarginBottom">
-                        <f:header>
-                            <card:Header title="Bill of Materials" subtitle="Product structures" iconSrc="sap-icon://clinical-tasty-recipe" />
-                        </f:header>
-                        <f:content>
-                            <VBox class="sapUiContentPadding" alignItems="Center" justifyContent="Center">
-                                <HBox class="cardIconBox sapUiSmallMarginBottom" alignItems="Center" justifyContent="Center">
-                                    <core:Icon xmlns:core="sap.ui.core" src="sap-icon://clinical-tasty-recipe" size="2rem" color="#2563eb" />
-                                </HBox>
-                                <Text text="{dashboard>/bomsCount}" class="cardCountText" />
-                                <Button text="Manage BOMs" type="Emphasized" press=".onNavigateToBoms" class="sapUiSmallMarginTop fullWidth" icon="sap-icon://navigation-right-arrow" iconFirst="false" />
                             </VBox>
                         </f:content>
                     </f:Card>
