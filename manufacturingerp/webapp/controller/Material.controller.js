@@ -134,21 +134,19 @@ sap.ui.define([
             oView.setBusy(true);
             var that = this;
 
-            var oPayload = {
-                MaterialId: oData.MaterialId,
-                MaterialName: oData.MaterialName,
-                SupplierId: oData.SupplierId,
-                Category: oData.Category,
-                Unit: oData.Unit,
-                UnitPrice: String(parseFloat(oData.UnitPrice) || 0),
-                CukyField: oData.CukyField,
-                CurrentStock: String(parseFloat(oData.CurrentStock) || 0),
-                Status: oData.Status
-            };
-
             if (oData.isCreate) {
                 // Create Operation
-                oModel.create("/Material", oPayload, {
+                var oPayload = {
+                    MaterialId: oData.MaterialId,
+                    MaterialName: oData.MaterialName,
+                    Category: oData.Category,
+                    Unit: oData.Unit,
+                    UnitPrice: String(parseFloat(oData.UnitPrice) || 0),
+                    CukyField: oData.CukyField,
+                    CurrentStock: String(parseFloat(oData.CurrentStock) || 0),
+                    Status: oData.Status
+                };
+                oModel.create("/Supplier(SupplierId='" + oData.SupplierId + "')/to_RawMaterial", oPayload, {
                     success: function () {
                         oView.setBusy(false);
                         that.onCancelMaterial();
@@ -166,6 +164,15 @@ sap.ui.define([
                 });
             } else {
                 // Edit Operation
+                var oPayload = {
+                    MaterialName: oData.MaterialName,
+                    Category: oData.Category,
+                    Unit: oData.Unit,
+                    UnitPrice: String(parseFloat(oData.UnitPrice) || 0),
+                    CukyField: oData.CukyField,
+                    CurrentStock: String(parseFloat(oData.CurrentStock) || 0),
+                    Status: oData.Status
+                };
                 oModel.update("/Material(MaterialId='" + oData.MaterialId + "')", oPayload, {
                     success: function () {
                         oView.setBusy(false);
