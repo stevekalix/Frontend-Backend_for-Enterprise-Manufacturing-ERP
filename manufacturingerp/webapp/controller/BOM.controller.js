@@ -148,10 +148,8 @@ sap.ui.define([
                 ProductId: oData.ProductId,
                 MaterialId: oData.MaterialId,
                 MaterialName: oData.MaterialName,
-                Quantity: parseFloat(oData.Quantity) || 0,
+                Quantity: String(parseFloat(oData.Quantity) || 0),
                 Unit: oData.Unit,
-                UnitPrice: parseFloat(oData.UnitPrice) || 0,
-                TotalAmount: parseFloat(oData.TotalAmount) || 0,
                 Currency: oData.Currency
             };
 

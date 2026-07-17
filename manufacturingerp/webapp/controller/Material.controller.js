@@ -140,9 +140,9 @@ sap.ui.define([
                 SupplierId: oData.SupplierId,
                 Category: oData.Category,
                 Unit: oData.Unit,
-                UnitPrice: parseFloat(oData.UnitPrice) || 0,
+                UnitPrice: String(parseFloat(oData.UnitPrice) || 0),
                 CukyField: oData.CukyField,
-                CurrentStock: parseFloat(oData.CurrentStock) || 0,
+                CurrentStock: String(parseFloat(oData.CurrentStock) || 0),
                 Status: oData.Status
             };
 

@@ -130,7 +130,7 @@ sap.ui.define([
                 ProductId: oData.ProductId,
                 ProductName: oData.ProductName,
                 Category: oData.Category,
-                ProfitPercentage: parseFloat(oData.ProfitPercentage) || 0,
+                ProfitPercentage: String(parseFloat(oData.ProfitPercentage) || 0),
                 Currency: oData.Currency,
                 Status: oData.Status
             };
